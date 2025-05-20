@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FCG.Domain\FCG.Domain.csproj" />
+    <ProjectReference Include="..\FCG.Infrastructure\FCG.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCG.Service", "src\FCG.Service\FCG.Service.csproj", "{BFB80F54-C3C7-406B-AA6D-EFF407AB9B4A}"
 EndProject
@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCG.Presentation", "src\FCG
 	ProjectSection(ProjectDependencies) = postProject
 		{BFB80F54-C3C7-406B-AA6D-EFF407AB9B4A} = {BFB80F54-C3C7-406B-AA6D-EFF407AB9B4A}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCG.Service.Tests", "tests\FCG.Service.Tests\FCG.Service.Tests.csproj", "{3CF90CB5-A9F7-45DF-8D52-A2AA274C67FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{AABC3B49-CA5D-42B5-8593-39BCFE472C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AABC3B49-CA5D-42B5-8593-39BCFE472C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AABC3B49-CA5D-42B5-8593-39BCFE472C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CF90CB5-A9F7-45DF-8D52-A2AA274C67FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF90CB5-A9F7-45DF-8D52-A2AA274C67FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF90CB5-A9F7-45DF-8D52-A2AA274C67FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF90CB5-A9F7-45DF-8D52-A2AA274C67FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
