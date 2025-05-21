@@ -11,6 +11,7 @@ namespace FCG.Service
         private readonly IMediatorHandler _mediator;        
         private bool _transactionValidation = true;
 
+
         private bool _hasError = false;
 
         private CancellationToken _cancellationToken = default;
@@ -23,7 +24,13 @@ namespace FCG.Service
         {            
             _mediator = mediator;
 
-        }               
+        }
+
+        protected void NotifyError(string cod, string message, bool logging = false)
+        {
+            _mediator.PublishEvent(new DomainNotification(cod, message));
+            _hasError = true;            
+        }
 
         protected bool IsValidTransaction(BaseDto obj)
         {

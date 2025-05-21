@@ -15,5 +15,9 @@ namespace FCG.Service.Interfaces
         Task<bool> ResetPasswordAsync(ResetPasswordDto resetPasswordDto);
 
         Task<bool> SendResetPasswordTokenAsync(string email);
+
+        Task<(IList<string>? Success, IdentityUser? User)> LoginAsync(LoginUserDto loginUserDto);
     }
+
+
 }

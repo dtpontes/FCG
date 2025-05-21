@@ -23,6 +23,15 @@ namespace FCG.Service.Tests
                 null!,
                 null!,
                 null!);
+
+            var signInManagerMock = new Mock<SignInManager<IdentityUser>>(
+                userManagerMock.Object,
+                null!,
+                null!,
+                null!,
+                null!,
+                null!);
+
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
                 Mock.Of<IRoleStore<IdentityRole>>(),
                 null!,
@@ -43,7 +52,8 @@ namespace FCG.Service.Tests
                 userManagerMock.Object,
                 roleManagerMock.Object,
                 notificationHandlerMock.Object,
-                mediatorMock.Object);
+                mediatorMock.Object,
+                signInManagerMock.Object);
 
             var dto = new RegisterUserDto { Email = "test@test.com", Password = "P@ssword123" };
             // Simule validação

@@ -11,14 +11,17 @@ namespace FCG.Service
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public UserService(UserManager<IdentityUser> userManager, 
             RoleManager<IdentityRole> roleManager,
             INotificationHandler<DomainNotification> notifications,
-            IMediatorHandler mediator) : base(notifications, mediator)
+            IMediatorHandler mediator,
+            SignInManager<IdentityUser> signInManager) : base(notifications, mediator)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IdentityUser?> CreateUserAsync(RegisterUserDto registerUserDto, string role)
@@ -74,6 +77,41 @@ namespace FCG.Service
             // Para teste, apenas logue ou retorne true
             Console.WriteLine($"Reset token for {email}: {token}");
             return true;
+        }
+
+        public async Task<(IList<string>? Success, IdentityUser? User)> LoginAsync(LoginUserDto loginUserDto)
+        {
+            if (!loginUserDto.IsValid())
+            {
+                return (null,null);
+            }                
+
+            var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
+            if (user == null)
+            {
+                NotifyError("UserNotFound", "Usuário não localizado.");
+                return (null, null);
+            }
+                
+
+            var result = await _signInManager.PasswordSignInAsync(loginUserDto.Email, loginUserDto.Password, false, false);
+
+            if (!result.Succeeded)
+            {
+                NotifyError("UserNotFound", "Usuário ou senha incorretos.");
+                return (null, null);
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles == null || !roles.Any())
+            {
+                NotifyError("UserNotFound", "Usuário não possui acessos.");
+                return (null, null);
+            }
+
+
+            return (roles, user);
         }
     }
 }

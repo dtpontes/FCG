@@ -7,15 +7,14 @@ namespace FCG.Service.DTO.Validator
         public RegisterUserDtoValidator()
         {
             RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Invalid email format.");
+                .NotEmpty().WithMessage("O e-mail é obrigatório.")
+                .EmailAddress().WithMessage("Formato de e-mail inválido.");
 
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("Password is required.")
-                .MinimumLength(8).WithMessage("Password must be at least 8 characters.")
+                .NotEmpty().WithMessage("A senha é obrigatória.")
+                .MinimumLength(8).WithMessage("A senha deve ter no mínimo 8 caracteres.")
                 .Matches(@"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?""{}|<>]).+$")
-                .WithMessage("Password must contain letters, numbers, and special characters.");
-            
+                .WithMessage("A senha deve conter letras, números e caracteres especiais.");
         }
     }
 }

@@ -54,26 +54,20 @@ namespace FCG.Presentation.Controllers
         }
 
         /// <summary>
-        /// Realiza login e retorna um token JWT.
+        /// Realiza autenticação do usuário e retorna um token JWT em caso de sucesso.
         /// </summary>
-        /// <param name="email">E-mail do usuário</param>
-        /// <param name="password">Senha</param>
-        /// <returns>Token JWT</returns>
+        /// <param name="loginUserDto">Dados de login do usuário (e-mail e senha).</param>
+        /// <returns>Token JWT se autenticado, ou erro de validação/autenticação.</returns>
         [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(typeof(object), 200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(LoginUserDto loginUserDto)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-                return Response();
+            var(roles, user)  = await _userService.LoginAsync(loginUserDto);
 
-            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
-
-            if (result.Succeeded)
-            {
-                var roles = await _userManager.GetRolesAsync(user);
+            if (roles != null && user != null)
+            {                
                 var token = GenerateJwtToken(user, roles);
                 return Response(new { token });
             }
@@ -107,7 +101,7 @@ namespace FCG.Presentation.Controllers
         [HttpPost("send-reset-token")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> SendResetToken([FromForm] string email)
+        public async Task<IActionResult> SendResetToken([FromBody] string email)
         {
             var result = await _userService.SendResetPasswordTokenAsync(email);
             if (!result)
