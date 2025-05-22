@@ -21,7 +21,14 @@ namespace FCG.Service.Tests
             // Arrange
             var userManagerMock = new Mock<UserManager<IdentityUser>>(
                 Mock.Of<IUserStore<IdentityUser>>(),
-                null, null, null, null, null, null, null, null);
+                Mock.Of<IOptions<IdentityOptions>>(),
+                Mock.Of<IPasswordHasher<IdentityUser>>(),
+                new IUserValidator<IdentityUser>[0],
+                new IPasswordValidator<IdentityUser>[0],
+                Mock.Of<ILookupNormalizer>(),
+                Mock.Of<IdentityErrorDescriber>(),
+                Mock.Of<IServiceProvider>(),
+                Mock.Of<ILogger<UserManager<IdentityUser>>>());
 
             // Mock do IMapper
             var mapperMock = new Mock<IMapper>();
@@ -46,7 +53,10 @@ namespace FCG.Service.Tests
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
                 Mock.Of<IRoleStore<IdentityRole>>(),
-                null, null, null, null);
+                new IRoleValidator<IdentityRole>[0],
+                Mock.Of<ILookupNormalizer>(),
+                Mock.Of<IdentityErrorDescriber>(),
+                Mock.Of<ILogger<RoleManager<IdentityRole>>>());
 
             var notificationHandlerMock = new Mock<INotificationHandler<DomainNotification>>();
             var mediatorMock = new Mock<IMediatorHandler>();
@@ -82,9 +92,17 @@ namespace FCG.Service.Tests
         public async Task SendResetPasswordToken_ReturnsFalse_WhenUserNotFound()
         {
             // Arrange
+            // Arrange
             var userManagerMock = new Mock<UserManager<IdentityUser>>(
                 Mock.Of<IUserStore<IdentityUser>>(),
-                null, null, null, null, null, null, null, null);
+                Mock.Of<IOptions<IdentityOptions>>(),
+                Mock.Of<IPasswordHasher<IdentityUser>>(),
+                new IUserValidator<IdentityUser>[0],
+                new IPasswordValidator<IdentityUser>[0],
+                Mock.Of<ILookupNormalizer>(),
+                Mock.Of<IdentityErrorDescriber>(),
+                Mock.Of<IServiceProvider>(),
+                Mock.Of<ILogger<UserManager<IdentityUser>>>());
 
             // Mock do IMapper
             var mapperMock = new Mock<IMapper>();
@@ -109,7 +127,11 @@ namespace FCG.Service.Tests
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
                 Mock.Of<IRoleStore<IdentityRole>>(),
-                null, null, null, null);
+                new IRoleValidator<IdentityRole>[0], 
+                Mock.Of<ILookupNormalizer>(),        
+                Mock.Of<IdentityErrorDescriber>(),   
+                Mock.Of<ILogger<RoleManager<IdentityRole>>>());
+            
 
             var notificationHandlerMock = new Mock<INotificationHandler<DomainNotification>>();
             var mediatorMock = new Mock<IMediatorHandler>();
@@ -144,9 +166,17 @@ namespace FCG.Service.Tests
         public async Task ResetPassword_ReturnsFalse_WhenDtoIsInvalid()
         {
             // Arrange
+            // Arrange
             var userManagerMock = new Mock<UserManager<IdentityUser>>(
                 Mock.Of<IUserStore<IdentityUser>>(),
-                null, null, null, null, null, null, null, null);
+                Mock.Of<IOptions<IdentityOptions>>(),
+                Mock.Of<IPasswordHasher<IdentityUser>>(),
+                new IUserValidator<IdentityUser>[0],
+                new IPasswordValidator<IdentityUser>[0],
+                Mock.Of<ILookupNormalizer>(),
+                Mock.Of<IdentityErrorDescriber>(),
+                Mock.Of<IServiceProvider>(),
+                Mock.Of<ILogger<UserManager<IdentityUser>>>());
 
             // Mock do IMapper
             var mapperMock = new Mock<IMapper>();
@@ -171,7 +201,10 @@ namespace FCG.Service.Tests
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
                 Mock.Of<IRoleStore<IdentityRole>>(),
-                null, null, null, null);
+                new IRoleValidator<IdentityRole>[0],
+                Mock.Of<ILookupNormalizer>(),
+                Mock.Of<IdentityErrorDescriber>(),
+                Mock.Of<ILogger<RoleManager<IdentityRole>>>());
 
             var notificationHandlerMock = new Mock<INotificationHandler<DomainNotification>>();
             var mediatorMock = new Mock<IMediatorHandler>();
