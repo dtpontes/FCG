@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FCG.Service.DTO.Request;
+using FluentValidation;
 
 namespace FCG.Service.DTO.Validator
 {

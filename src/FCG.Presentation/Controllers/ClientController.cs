@@ -2,6 +2,8 @@
 using FCG.Domain.Entities;
 using FCG.Domain.Interfaces.Commons;
 using FCG.Service.DTO;
+using FCG.Service.DTO.Request;
+using FCG.Service.DTO.Response;
 using FCG.Service.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,18 +33,13 @@ namespace FCG.Presentation.Controllers
         /// <param name="registerClientDto">Dados do cliente</param>
         /// <returns>Cliente criado ou erros de validação</returns>
         [HttpPost("register")]
-        [ProducesResponseType(typeof(Client), 200)]
+        [ProducesResponseType(typeof(RegisterClientResponseDto), 200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> RegisterClient(RegisterClientDto registerClientDto)
         {      
-
-            // Cria o usuário e adiciona ao papel "Client"
-            var user = await _userService.CreateUserAsync(new RegisterUserDto{ Email = registerClientDto.Email, Password = registerClientDto.Password}, "user");
-            if (user == null)
-                return Response();
-
+           
             // Cria o cliente associado ao usuário
-            var client = await _clientService.CreateClientAsync(registerClientDto, user);
+            var client = await _clientService.CreateClient(registerClientDto);
 
             return client != null? Response(client) : Response();
         }        

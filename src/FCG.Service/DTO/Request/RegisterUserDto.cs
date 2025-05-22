@@ -1,27 +1,23 @@
 ﻿using FCG.Service.DTO.Validator;
-using FluentValidation;
 
-namespace FCG.Service.DTO
+namespace FCG.Service.DTO.Request
 {
     /// <summary>
-    /// DTO para redefinição de senha.
+    /// DTO para cadastro de usuário administrador.
     /// </summary>
-    public class ResetPasswordDto : BaseDto
+    public class RegisterUserDto : BaseDto
     {
         /// <summary>
         /// E-mail do usuário.
         /// </summary>
+        /// <example>usuario@dominio.com</example>
         public required string Email { get; set; }
 
         /// <summary>
-        /// Nova senha.
+        /// Senha do usuário.
         /// </summary>
+        /// <example>SenhaForte123!</example>
         public required string Password { get; set; }
-
-        /// <summary>
-        /// Token de redefinição de senha.
-        /// </summary>
-        public required string Token { get; set; }
 
         /// <summary>
         /// Valida os dados do DTO usando FluentValidation.
@@ -29,7 +25,7 @@ namespace FCG.Service.DTO
         /// <returns>True se válido, senão false.</returns>
         public override bool IsValid()
         {
-            ValidationResult = new ResetPasswordDtoValidator().Validate(this);
+            ValidationResult = new RegisterUserDtoValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

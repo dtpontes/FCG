@@ -1,23 +1,29 @@
 ﻿using FCG.Service.DTO.Validator;
 
-namespace FCG.Service.DTO
+namespace FCG.Service.DTO.Request
 {
     /// <summary>
-    /// DTO para cadastro de usuário administrador.
+    /// DTO para cadastro de cliente.
     /// </summary>
-    public class RegisterUserDto : BaseDto
+    public class RegisterClientDto : BaseDto
     {
         /// <summary>
-        /// E-mail do usuário.
+        /// E-mail do cliente.
+        /// <example>cliente@exemplo.com</example>
         /// </summary>
-        /// <example>usuario@dominio.com</example>
         public required string Email { get; set; }
 
         /// <summary>
-        /// Senha do usuário.
-        /// </summary>
+        /// Senha do cliente.
         /// <example>SenhaForte123!</example>
+        /// </summary>
         public required string Password { get; set; }
+
+        /// <summary>
+        /// Nome do cliente.
+        /// <example>João da Silva</example>
+        /// </summary>
+        public required string Name { get; set; }
 
         /// <summary>
         /// Valida os dados do DTO usando FluentValidation.
@@ -25,7 +31,7 @@ namespace FCG.Service.DTO
         /// <returns>True se válido, senão false.</returns>
         public override bool IsValid()
         {
-            ValidationResult = new RegisterUserDtoValidator().Validate(this);
+            ValidationResult = new RegisterClientDtoValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

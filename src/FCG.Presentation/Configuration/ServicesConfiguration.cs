@@ -21,6 +21,7 @@ namespace FCG.Presentation.Configuration
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.AddAutoMapper(typeof(Service.AutoMapper.AutoMapperProfile).Assembly);
             return services;
         }
     }

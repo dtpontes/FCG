@@ -3,7 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using FCG.Domain.Core.Notifications;
 using FCG.Domain.Interfaces.Commons;
-using FCG.Service.DTO;
+using FCG.Service.DTO.Request;
+using FCG.Service.DTO.Response;
 using FCG.Service.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -42,15 +43,15 @@ namespace FCG.Presentation.Controllers
         /// <returns>Usuário criado ou erros de validação</returns>
         [AllowAnonymous]
         [HttpPost("register")]
-        [ProducesResponseType(typeof(IdentityUser), 200)]
+        [ProducesResponseType(typeof(RegisterUserResponseDto), 200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> RegisterAdmin(RegisterUserDto registerUserDto)
         {
-            var user = await _userService.CreateUserAsync(registerUserDto, "Admin");
-            if (user == null)
+            var userDto = await _userService.CreateUser(registerUserDto, "Admin");
+            if (userDto == null)
                 return Response();
             
-            return Response(user);
+            return Response(userDto);
         }
 
         /// <summary>
@@ -85,10 +86,8 @@ namespace FCG.Presentation.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
-            var result = await _userService.ResetPasswordAsync(resetPasswordDto);
-            if (!result)
-                return Response();
-
+            var result = await _userService.ResetPassword(resetPasswordDto);
+            
             return Response();
         }
 
@@ -103,14 +102,20 @@ namespace FCG.Presentation.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> SendResetToken([FromBody] string email)
         {
-            var result = await _userService.SendResetPasswordTokenAsync(email);
+            var result = await _userService.SendResetPasswordToken(email);
             if (!result)
-                return BadRequest("User not found or error sending token.");
+                return BadRequest("Ocorreu algum erro, tente novamente mais tarde!");
 
-            return Ok("Reset token sent to email.");
+            return Response("Link de redefinição de senha enviado para o Email");
         }
 
 
+        /// <summary>
+        /// Gera um token JWT para o usuário autenticado, incluindo suas roles.
+        /// </summary>
+        /// <param name="user">Usuário autenticado do Identity.</param>
+        /// <param name="roles">Lista de roles (perfis) do usuário.</param>
+        /// <returns>Token JWT como string.</returns>
         private string GenerateJwtToken(IdentityUser user, IList<string> roles)
         {
             var jwtSettings = HttpContext.RequestServices.GetRequiredService<IConfiguration>().GetSection("JwtSettings");

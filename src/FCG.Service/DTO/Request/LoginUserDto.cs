@@ -1,6 +1,6 @@
 ﻿using FCG.Service.DTO.Validator;
 
-namespace FCG.Service.DTO
+namespace FCG.Service.DTO.Request
 {
     /// <summary>
     /// DTO para cadastro de usuário administrador.

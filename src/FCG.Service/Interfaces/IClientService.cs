@@ -1,11 +1,14 @@
 ﻿using FCG.Domain.Entities;
-using FCG.Service.DTO;
-using Microsoft.AspNetCore.Identity;
+using FCG.Service.DTO.Request;
+using FCG.Service.DTO.Response;
 
 namespace FCG.Service.Interfaces
 {
     public interface IClientService
     {
-        Task<Client?> CreateClientAsync(RegisterClientDto clientDto, IdentityUser user);
+        /// <summary>
+        /// Serviço responsável pelas operações de clientes, incluindo cadastro e associação de usuário.
+        /// </summary>
+        Task<RegisterClientResponseDto?> CreateClient(RegisterClientDto registerClientDto);
     }
 }
