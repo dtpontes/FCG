@@ -27,15 +27,7 @@ namespace FCG.Presentation
             return BadRequest(ResponseObject<object>.Fail(errors));
         }
 
-        protected new IActionResult Response()
-        {
-            if (!IsValidTransaction())
-            {
-                return ValidationErrors();
-            }
-
-            return Ok(ResponseObject<object>.Succeed());
-        }
+        
 
         protected IActionResult PageResponse(dynamic page)
         {
@@ -69,6 +61,16 @@ namespace FCG.Presentation
             }
 
             return Ok(ResponseObject<object>.Succeed(entity));
+        }
+
+        protected new IActionResult Response()
+        {
+            if (!IsValidTransaction())
+            {
+                return ValidationErrors();
+            }
+
+            return Ok(ResponseObject<object>.Succeed());
         }
 
     }

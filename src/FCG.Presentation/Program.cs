@@ -42,4 +42,4 @@ using (var scope = app.Services.CreateScope())
     await IdentityConfiguration.SeedRolesAsync(scope.ServiceProvider);
 }
 
-app.Run();
+await app.RunAsync();

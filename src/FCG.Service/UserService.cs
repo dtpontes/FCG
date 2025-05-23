@@ -99,8 +99,8 @@ namespace FCG.Service
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // TODO: Implemente o envio de e-mail real aqui
-            // Exemplo: await _emailService.SendAsync(email, "Password Reset", $"Seu token: {token}");
+            //TODO: Implemente o envio de e-mail real aqui
+            
 
             // Para teste, apenas logue ou retorne true
             Console.WriteLine($"Reset token for {email}: {token}");

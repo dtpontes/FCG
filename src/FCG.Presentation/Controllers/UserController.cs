@@ -18,22 +18,14 @@ namespace FCG.Presentation.Controllers
     [Route("api/[controller]")]
     public class UserController : BaseController
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IUserService _userService;
-        private readonly IClientService _clientService;
+        
 
-        public UserController(UserManager<IdentityUser> userManager, 
-                                SignInManager<IdentityUser> signInManager,                                
-                                IUserService userService,
-                                IClientService clientService,
+        public UserController(  IUserService userService,                                
                                 IMediatorHandler mediator,
                                 INotificationHandler<DomainNotification> notifications) : base(notifications, mediator)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _userService = userService;
-            _clientService = clientService;
+        {           
+            _userService = userService;            
         }
 
         /// <summary>
@@ -86,7 +78,7 @@ namespace FCG.Presentation.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
-            var result = await _userService.ResetPassword(resetPasswordDto);
+            await _userService.ResetPassword(resetPasswordDto);
             
             return Response();
         }

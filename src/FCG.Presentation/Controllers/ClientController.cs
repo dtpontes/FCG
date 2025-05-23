@@ -13,17 +13,13 @@ namespace FCG.Presentation.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class ClientController : BaseController
-    {
-
-        private readonly IUserService _userService;
+    {        
         private readonly IClientService _clientService;
 
-        public ClientController(IUserService userService,
-                                IClientService clientService,
+        public ClientController(IClientService clientService,
                                 IMediatorHandler mediator,
                                 INotificationHandler<DomainNotification> notifications): base(notifications, mediator)
-        {
-            _userService = userService;
+        {            
             _clientService = clientService;
         }
 
