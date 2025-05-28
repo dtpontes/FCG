@@ -1,6 +1,7 @@
 using FCG.Infrastructure;
 using FCG.Presentation.Configuration;
 using FCG.Presentation.Middlewares;
+using GraphQL.AspNet.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseGraphQL();
 
 using (var scope = app.Services.CreateScope())
 {

@@ -2,10 +2,11 @@
 using FCG.Domain.Handlers;
 using FCG.Domain.Interfaces.Commons;
 using FCG.Domain.Repositories;
-using FCG.Infrastructure.Repositories;
 using FCG.Infrastructure;
-using FCG.Service.Interfaces;
+using FCG.Infrastructure.Repositories;
 using FCG.Service;
+using FCG.Service.Interfaces;
+using GraphQL.AspNet.Configuration;
 using MediatR;
 
 namespace FCG.Presentation.Configuration
@@ -23,6 +24,7 @@ namespace FCG.Presentation.Configuration
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddAutoMapper(typeof(Service.AutoMapper.AutoMapperProfile).Assembly);
+            services.AddGraphQL();
             return services;
         }
     }
