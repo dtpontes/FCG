@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\FCG.Domain\FCG.Domain.csproj" />
     <ProjectReference Include="..\..\src\FCG.Infrastructure\FCG.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\FCG.Presentation\FCG.Presentation.csproj" />
     <ProjectReference Include="..\..\src\FCG.Service\FCG.Service.csproj" />
   </ItemGroup>
 

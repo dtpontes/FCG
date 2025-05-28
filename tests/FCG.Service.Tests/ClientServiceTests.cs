@@ -60,9 +60,5 @@ namespace FCG.Service.Tests
             Assert.Equal("client@test.com", result.Email);
         }
 
-        
-
-       
-
     }
 }

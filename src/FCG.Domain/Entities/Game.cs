@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FCG.Domain.Entities
 {
-    public class Client : Base
-    {        
+    public class Game : Base
+    {       
         public string Name { get; set; } = null!;        
-        public string UserId { get; set; } = null!;
-        public IdentityUser User { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public DateTime DateRelease { get; set; } 
+        public DateTime DateUpdate { get; set; } = DateTime.Now!;
     }
 }

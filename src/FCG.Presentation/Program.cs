@@ -1,5 +1,6 @@
 using FCG.Infrastructure;
 using FCG.Presentation.Configuration;
+using FCG.Presentation.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddAppServices();
+builder.Host.ConfigureSerilog();
 
 var app = builder.Build();
 
@@ -31,6 +33,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<SerilogRequestLoggingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

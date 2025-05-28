@@ -10,7 +10,8 @@ namespace FCG.Domain.Repositories
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Client> Clients { get; }
-        // Add other repositories as needed
+
+        IRepository<Game> Games { get; }        
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -18,6 +18,7 @@ namespace FCG.Presentation.Configuration
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IGameService, GameService>();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();

@@ -41,14 +41,17 @@ namespace FCG.Service.Tests
             var logger = new Mock<ILogger<SignInManager<IdentityUser>>>().Object;
             var schemes = new Mock<IAuthenticationSchemeProvider>().Object;
 
-            
+
+            var userConfirmationMock = new Mock<IUserConfirmation<IdentityUser>>().Object;
+
             var signInManager = new SignInManager<IdentityUser>(
                 userManagerMock.Object,
                 contextAccessor,
                 claimsFactory,
                 options,
                 logger,
-                schemes
+                schemes,
+                userConfirmationMock
             );
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
@@ -116,13 +119,16 @@ namespace FCG.Service.Tests
             var schemes = new Mock<IAuthenticationSchemeProvider>().Object;
 
 
+            var userConfirmationMock = new Mock<IUserConfirmation<IdentityUser>>().Object;
+
             var signInManager = new SignInManager<IdentityUser>(
                 userManagerMock.Object,
                 contextAccessor,
                 claimsFactory,
                 options,
                 logger,
-                schemes
+                schemes,
+                userConfirmationMock
             );
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
@@ -190,13 +196,16 @@ namespace FCG.Service.Tests
             var schemes = new Mock<IAuthenticationSchemeProvider>().Object;
 
 
+            var userConfirmationMock = new Mock<IUserConfirmation<IdentityUser>>().Object;
+
             var signInManager = new SignInManager<IdentityUser>(
                 userManagerMock.Object,
                 contextAccessor,
                 claimsFactory,
                 options,
                 logger,
-                schemes
+                schemes,
+                userConfirmationMock
             );
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>(
