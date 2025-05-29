@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  fcg.presentation:
+    image: ${DOCKER_REGISTRY-}fcgpresentation
+    build:
+      context: .
+      dockerfile: src/FCG.Presentation/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=FCGDatabase;User=sa;Password=YourStrongPassword123;TrustServerCertificate=True;
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433" # Map container port 1433 to host port 1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_sa_PASSWORD=YourStrongPassword123
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+volumes:
+  sqlserverdata:
