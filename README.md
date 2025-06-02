@@ -48,7 +48,7 @@ Este comando irá:
 ### Passo 3: Acessar a Aplicação
 Após os containers estarem em execução, você pode acessar a aplicação:
 - **Swagger UI**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
-- **Endpoint GraphQL**: [http://localhost:8081/graphql](http://localhost:8081/graphql)
+- **Endpoint GraphQL**: [http://localhost:8080/graphql](http://localhost:8080/graphql)
 
 ### Passo 4: Parar os Containers
 Para parar os containers, execute:
