@@ -32,7 +32,7 @@ A aplicação está configurada para ser executada utilizando Docker Compose. Si
 ### Passo 1: Clonar o Repositório
 Clone o repositório para sua máquina local:
 
-git clone [https://github.com/seu-repositorio.git](https://github.com/dtpontes/FCG.git) cd seu-repositorio
+git clone [https://github.com/dtpontes/FCG.git](https://github.com/dtpontes/FCG.git) cd seu-repositorio
 
 
 ### Passo 2: Construir e Executar os Containers
