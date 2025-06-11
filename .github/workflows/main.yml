@@ -15,6 +15,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Step2
-        uses: echo "Esse é o step 2"
+        run: echo "Esse é o step 2"
 
      
