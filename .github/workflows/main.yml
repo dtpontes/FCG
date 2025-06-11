@@ -2,19 +2,30 @@ name: Docker Compose CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-with-compose:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Step1
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Step2
-        run: echo "Esse é o step 2"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push with Docker Compose
+        run: |
+          docker compose build
+          docker compose push
 
      
