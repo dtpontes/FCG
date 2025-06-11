@@ -21,6 +21,9 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore ./FCG.sln
+
+      - name: Build solution
+        run: dotnet build ./FCG.sln --configuration Release --no-restore
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
