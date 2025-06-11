@@ -24,6 +24,9 @@ jobs:
 
       - name: Build solution
         run: dotnet build ./FCG.sln --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test ./tests/FCG.Service.Tests/FCG.Service.Tests.csproj --configuration Release --no-build --no-restore --verbosity normal 
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
