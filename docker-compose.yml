@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   fcg.presentation:
-    image: ${DOCKER_REGISTRY-}fcgpresentation
+    image: dtpontes/fcgpresentation
     build:
       context: .
       dockerfile: src/FCG.Presentation/Dockerfile
