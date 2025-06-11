@@ -23,26 +23,3 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # - name: Log in to GitHub Container Registry
-      #   uses: docker/login-action@v3
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.SECRET_GITHUB_TOKEN }}
-
-      - name: Build services with Docker Compose
-        run: docker-compose -f docker-compose.yml build
-
-      # Example: Run services in detached mode (e.g., for integration tests)
-      # - name: Start services
-      #   run: docker-compose -f docker-compose.yml up -d
-
-      # Example: Run tests on a specific service
-      # - name: Run tests
-      #   run: docker-compose -f docker-compose.yml run --rm fcg.presentation your_test_command
-
-      # Example: Stop services
-      # - name: Stop services
-      #   if: always() # Ensure services are stopped even if previous steps fail
-      #   run: docker-compose -f docker-compose.yml down
