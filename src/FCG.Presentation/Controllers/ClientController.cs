@@ -24,7 +24,7 @@ namespace FCG.Presentation.Controllers
         }
 
         /// <summary>
-        /// Registra um novo cliente e usuário associado.
+        /// Registra um novo cliente e usuário associado
         /// </summary>
         /// <param name="registerClientDto">Dados do cliente</param>
         /// <returns>Cliente criado ou erros de validação</returns>
