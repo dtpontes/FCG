@@ -23,6 +23,7 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddAppServices();
 builder.Host.ConfigureSerilog();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -47,6 +48,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.UseGraphQL();
 
