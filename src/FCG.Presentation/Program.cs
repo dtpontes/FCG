@@ -21,10 +21,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddAppServices();
 builder.Host.ConfigureSerilog();
 
-// Adiciona um health check mais robusto que também verifica a conexão com o banco
-builder.Services.AddHealthChecks()
-    .AddDbContextCheck<AppDbContext>();
-
 var app = builder.Build();
 
 // Configurar o pipeline de requisições HTTP.
@@ -41,9 +37,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// O endpoint de health check agora está disponível quase que instantaneamente.
-app.MapHealthChecks("/health");
 
 app.UseGraphQL();
 
