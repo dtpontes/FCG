@@ -73,4 +73,4 @@ jobs:
           app-name: 'appwebfgc'
           slot-name: 'Production'
           publish-profile: ${{ secrets.PUBLISH_PROFILE }}
-          images: 'index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/dtpontes/fcgpresentation:latest'
+          images: 'dtpontes/fcgpresentation:latest'
