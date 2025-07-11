@@ -74,3 +74,9 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           images: 'dtpontes/fcgpresentation:latest'
+
+      # Restart the Azure Web App (ADD THIS AFTER THE DEPLOY STEP)
+      - name: Restart Azure Web App
+        uses: azure/cli@v2
+        with:
+          inlineScript: az webapp restart --name webContainerAppFGC --resource-group RGDockFiap
