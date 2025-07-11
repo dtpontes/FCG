@@ -74,3 +74,11 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           images: 'dtpontes/fcgpresentation:latest'
+
+      - name: Azure CLI Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Restart Azure Web App
+        run: az webapp restart --name webContainerAppFGC --resource-group RGDockFiap
