@@ -38,6 +38,20 @@ namespace FCG.Presentation.Controllers
             var client = await _clientService.CreateClient(registerClientDto);
 
             return client != null? Response(client) : Response();
-        }        
+        }
+
+        /// <summary>
+        /// Teste de atualização
+        /// </summary>        
+        /// <returns>Cliente criado ou erros de validação</returns>
+        [HttpGet("teste")]
+        [ProducesResponseType(typeof(RegisterClientResponseDto), 200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Test()
+        {
+            // Cria o cliente associado ao usuário            
+
+            return Response(true);
+        }
     }
 }
