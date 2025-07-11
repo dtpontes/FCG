@@ -74,6 +74,12 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           images: 'dtpontes/fcgpresentation:latest'
+          
+       # Log in to Azure
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}      
 
       # Restart the Azure Web App (ADD THIS AFTER THE DEPLOY STEP)
       - name: Restart Azure Web App
