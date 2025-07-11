@@ -73,4 +73,4 @@ jobs:
           app-name: 'appwebfgc'
           slot-name: 'Production'
           publish-profile: ${{ secrets.PUBLISH_PROFILE }}
-          images: 'dtpontes/fcgpresentation:latest'
+          images: 'dtpontes/fcgpresentation'
