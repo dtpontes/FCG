@@ -72,5 +72,5 @@ jobs:
         with:
           app-name: 'appwebfgc'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_18fa592ff4724246a40918592de9bd6b }}
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           images: 'index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/dtpontes/fcgpresentation:latest'
