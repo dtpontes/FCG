@@ -68,20 +68,6 @@ namespace FCG.Presentation.Controllers
             return Response(true);
         }
 
-        /// <summary>
-        /// Teste de atualização
-        /// </summary>        
-        /// <returns>Cliente criado ou erros de validação</returns>
-        [HttpGet("teste3")]
-        [ProducesResponseType(typeof(RegisterClientResponseDto), 200)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> Test3()
-        {
-            // Cria o cliente associado ao usuário            
-
-            return Response(true);
-        }
-
 
     }
 }
