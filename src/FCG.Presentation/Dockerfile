@@ -29,5 +29,31 @@ RUN dotnet publish "./FCG.Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/p
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
+
+# Temporariamente altere para o usuário root
+USER root
+
+RUN echo "Installing New Relic .NET Agent..."
+
+# Install the agent
+RUN apt-get update && apt-get install -y wget ca-certificates gnupg \
+&& echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/sources.list.d/newrelic.list \
+&& wget https://download.newrelic.com/548C16BF.gpg \
+&& apt-key add 548C16BF.gpg \
+&& apt-get update \
+&& apt-get install -y 'newrelic-dotnet-agent' \
+&& rm -rf /var/lib/apt/lists/*
+
+# Retorne ao usuário não privilegiado após a instalação
+USER $APP_UID
+
+# Enable the agent
+ENV CORECLR_ENABLE_PROFILING=1 \
+CORECLR_PROFILER={36032161-FFC0-4B61-B559-F6C5D41BAE5A} \
+CORECLR_NEWRELIC_HOME=/usr/local/newrelic-dotnet-agent \
+CORECLR_PROFILER_PATH=/usr/local/newrelic-dotnet-agent/libNewRelicProfiler.so \
+NEW_RELIC_LICENSE_KEY=45661a456b6a6514f638e8bc822e10d3FFFFNRAL \
+NEW_RELIC_APP_NAME="fcg_newrelic"
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "FCG.Presentation.dll"]

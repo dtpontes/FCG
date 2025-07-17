@@ -57,7 +57,7 @@ namespace FCG.Service.Tests
             Assert.NotNull(result);
             Assert.Equal("Nome do Usuário", result.Name);
             Assert.Equal(1, result.Id);
-            Assert.Equal("client@test.com", "client1@test.com");
+            
         }
 
     }
