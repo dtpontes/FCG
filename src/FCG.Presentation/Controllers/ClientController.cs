@@ -45,10 +45,10 @@ namespace FCG.Presentation.Controllers
         /// Teste de atualização
         /// </summary>        
         /// <returns>Cliente criado ou erros de validação</returns>
-        [HttpGet("apresentacao")]
+        [HttpGet("apresentacao-teste")]
         [ProducesResponseType(typeof(RegisterClientResponseDto), 200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Apresentacao()
+        public async Task<IActionResult> ApresentacaoTeste()
         {
             // Cria o cliente associado ao usuário            
 
