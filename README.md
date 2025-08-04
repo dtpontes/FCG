@@ -25,6 +25,21 @@ Antes de executar a aplicação, certifique-se de ter instalado:
 
 ---
 
+## Integração Contínua e Deploy Automático (GitHub Actions)
+
+Este repositório utiliza o GitHub Actions para automatizar o processo de integração contínua (CI) e deploy. O workflow principal está definido em .github/workflows/main.yml e executa as seguintes etapas:
+
+Build e Testes: Ao criar um pull request ou enviar commits para a branch master, o workflow realiza o build da aplicação e executa os testes automatizados usando .NET 9.
+Build e Push Docker: Após os testes passarem, o workflow constrói as imagens Docker e faz o push para o Docker Hub.
+Deploy no Azure: Finalmente, a aplicação é implantada automaticamente no Azure Web App utilizando a imagem Docker publicada.
+Benefícios
+Garantia de que o código enviado para a branch principal está sempre testado.
+Implantação automática e rápida após cada alteração aprovada.
+Facilidade para rastrear e reverter problemas através do histórico de builds e deploys.
+Para mais detalhes, consulte o arquivo main.yml.
+
+---
+
 ## Executando a Aplicação com Docker Compose
 
 A aplicação está configurada para ser executada utilizando Docker Compose. Siga os passos abaixo:
@@ -54,7 +69,6 @@ Após os containers estarem em execução, você pode acessar a aplicação:
 Para parar os containers, execute:
 
 docker-compose down
-
 
 ---
 
