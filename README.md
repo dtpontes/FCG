@@ -40,14 +40,11 @@ Para mais detalhes, consulte o arquivo main.yml.
 
 ---
 
----
-
 ## Deploy no Azure Web App com Azure CLI
 
 Execute os comandos abaixo para publicar sua aplicação containerizada no Azure e criar o banco SQL Server.  
 Cada comando possui um comentário explicando sua função.
 
-```sh
 # 1. Cria um grupo de recursos chamado RGDockFiap na região eastUS
 az group create --name RGDockFiap --location eastUS
 
