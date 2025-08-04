@@ -40,6 +40,37 @@ Para mais detalhes, consulte o arquivo main.yml.
 
 ---
 
+---
+
+## Deploy no Azure Web App com Azure CLI
+
+Execute os comandos abaixo para publicar sua aplicação containerizada no Azure e criar o banco SQL Server.  
+Cada comando possui um comentário explicando sua função.
+
+```sh
+# 1. Cria um grupo de recursos chamado RGDockFiap na região eastUS
+az group create --name RGDockFiap --location eastUS
+
+# 2. Cria um App Service Plan para aplicações Linux
+az appservice plan create -n myappservplanfcg -g RGDockFiap --is-linux
+
+# 3. Cria o WebApp usando a imagem Docker do Docker Hub (altere o nome da imagem se necessário)
+az webapp create -n webContainerAppFGC -g RGDockFiap -p myappservplanfcg -i dtpontes/fcgpresentation:latest
+
+# 4. Cria um servidor SQL no Azure (altere usuário e senha para valores seguros)
+az sql server create -l westus2 -g RGDockFiap -n fiapsqlserver5 -u sqladmin -p P2ssw0rd1234
+
+# 5. Cria o banco de dados chamado mhcdb no servidor recém-criado
+az sql db create -g RGDockFiap -s fiapsqlserver5 -n mhcdb --service-objective S0
+
+# 6. Libera acesso ao SQL Server para serviços do Azure
+az sql server firewall-rule create --resource-group RGDockFiap --server fiapsqlserver5 --name AllowAllAzureIps --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+
+# 7. Define a string de conexão do banco de dados no WebApp
+az webapp config connection-string set -g RGDockFiap -n webContainerAppFGC -t SQLAzure --settings defaultConnection='Data Source=tcp:fiapsqlserver5.database.windows.net,1433;Initial Catalog=mhcdb;User Id=sqladmin;Password=P2ssw0rd1234;'
+
+---
+
 ## Executando a Aplicação com Docker Compose
 
 A aplicação está configurada para ser executada utilizando Docker Compose. Siga os passos abaixo:
