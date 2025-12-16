@@ -59,8 +59,19 @@ static async Task InitializeDatabaseAsync(IHost app)
     {
         logger.LogInformation("Applying database migrations...");
         var dbContext = services.GetRequiredService<AppDbContext>();
-        await dbContext.Database.MigrateAsync(); // Usa a versão assíncrona
-        logger.LogInformation("Database migrations applied successfully.");
+        
+        // Verifica se há migrations pendentes antes de aplicar
+        var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
+        if (pendingMigrations.Any())
+        {
+            logger.LogInformation("Found {Count} pending migrations. Applying...", pendingMigrations.Count());
+            await dbContext.Database.MigrateAsync();
+            logger.LogInformation("Database migrations applied successfully.");
+        }
+        else
+        {
+            logger.LogInformation("No pending migrations. Database is up to date.");
+        }
 
         logger.LogInformation("Seeding database roles...");
         await IdentityConfiguration.SeedRolesAsync(services);
