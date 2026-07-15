@@ -10,5 +10,15 @@ namespace FCG.Service.Interfaces
         /// Serviço responsável pelas operações de clientes, incluindo cadastro e associação de usuário.
         /// </summary>
         Task<RegisterClientResponseDto?> CreateClient(RegisterClientDto registerClientDto);
+
+        /// <summary>
+        /// Lista todos os clientes cadastrados.
+        /// </summary>
+        Task<IEnumerable<RegisterClientResponseDto>> GetAllClientsAsync();
+
+        /// <summary>
+        /// Consulta um cliente específico por id.
+        /// </summary>
+        Task<RegisterClientResponseDto?> GetClientByIdAsync(long id);
     }
 }

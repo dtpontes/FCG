@@ -7,6 +7,7 @@ using FCG.Service.DTO.Request;
 using FCG.Service.DTO.Response;
 using FCG.Service.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FCG.Service
 {
@@ -18,6 +19,7 @@ namespace FCG.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ILogger<ClientService> _logger;
 
         /// <summary>
         /// Inicializa uma nova instância de <see cref="ClientService"/>.
@@ -27,15 +29,18 @@ namespace FCG.Service
         /// <param name="mediator">Handler de eventos do domínio.</param>
         /// <param name="userService">Serviço de usuários para criação e associação.</param>
         /// <param name="mapper">Instância do AutoMapper.</param>
+        /// <param name="logger">Logger estruturado para diagnóstico de operações de cliente.</param>
         public ClientService(IUnitOfWork unitOfWork,
                             INotificationHandler<DomainNotification> notifications,
                             IMediatorHandler mediator,
                             IUserService userService,
-                            IMapper mapper): base(notifications, mediator) 
+                            IMapper mapper,
+                            ILogger<ClientService> logger): base(notifications, mediator)
         {
             _unitOfWork = unitOfWork;
             _userService = userService;
-            _mapper = mapper;   
+            _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -69,8 +74,37 @@ namespace FCG.Service
             await _unitOfWork.Clients.AddAsync(client);
             await _unitOfWork.SaveChangesAsync();
 
-            return _mapper.Map<RegisterClientResponseDto>(client); 
+            return _mapper.Map<RegisterClientResponseDto>(client);
 
-        }        
+        }
+
+        /// <summary>
+        /// Lista todos os clientes cadastrados.
+        /// </summary>
+        /// <returns>Coleção de clientes cadastrados (vazia se não houver nenhum).</returns>
+        public async Task<IEnumerable<RegisterClientResponseDto>> GetAllClientsAsync()
+        {
+            var clients = await _unitOfWork.Clients.GetAllWithUserAsync();
+
+            return _mapper.Map<IEnumerable<RegisterClientResponseDto>>(clients);
+        }
+
+        /// <summary>
+        /// Consulta um cliente específico por id.
+        /// </summary>
+        /// <param name="id">Id do cliente.</param>
+        /// <returns>Dados do cliente, ou null se não encontrado.</returns>
+        public async Task<RegisterClientResponseDto?> GetClientByIdAsync(long id)
+        {
+            var client = await _unitOfWork.Clients.GetByIdWithUserAsync(id);
+
+            if (client == null)
+            {
+                _logger.LogInformation("Cliente {ClientId} não encontrado", id);
+                return null;
+            }
+
+            return _mapper.Map<RegisterClientResponseDto>(client);
+        }
     }
 }

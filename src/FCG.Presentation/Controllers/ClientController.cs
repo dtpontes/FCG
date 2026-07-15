@@ -6,6 +6,7 @@ using FCG.Service.DTO.Request;
 using FCG.Service.DTO.Response;
 using FCG.Service.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FCG.Presentation.Controllers
@@ -38,6 +39,36 @@ namespace FCG.Presentation.Controllers
             var client = await _clientService.CreateClient(registerClientDto);
 
             return client != null? Response(client) : Response();
-        }     
+        }
+
+        /// <summary>
+        /// Lista todos os clientes cadastrados
+        /// </summary>
+        /// <returns>Lista de clientes (vazia se não houver nenhum cadastrado)</returns>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(IEnumerable<RegisterClientResponseDto>), 200)]
+        public async Task<IActionResult> GetAllClients()
+        {
+            var clients = await _clientService.GetAllClientsAsync();
+
+            return Response(clients);
+        }
+
+        /// <summary>
+        /// Consulta um cliente específico por id
+        /// </summary>
+        /// <param name="id">Id do cliente</param>
+        /// <returns>Dados do cliente, ou 404 se não encontrado</returns>
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(RegisterClientResponseDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetClientById(long id)
+        {
+            var client = await _clientService.GetClientByIdAsync(id);
+
+            return Response(client);
+        }
     }
 }

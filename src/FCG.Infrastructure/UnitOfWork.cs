@@ -12,7 +12,7 @@ namespace FCG.Infrastructure
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        private IRepository<Client>? _clients;
+        private IClientRepository? _clients;
         private IRepository<Game>? _games;
         // Add other repositories as needed
 
@@ -21,7 +21,7 @@ namespace FCG.Infrastructure
             _context = context;
         }
 
-        public IRepository<Client> Clients => _clients ??= new Repository<Client>(_context);
+        public IClientRepository Clients => _clients ??= new ClientRepository(_context);
 
         public IRepository<Game> Games => _games ??= new Repository<Game>(_context);
 
