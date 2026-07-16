@@ -20,5 +20,10 @@ namespace FCG.Service.Interfaces
         /// Consulta um cliente específico por id.
         /// </summary>
         Task<RegisterClientResponseDto?> GetClientByIdAsync(long id);
+
+        /// <summary>
+        /// Atualiza o nome de um cliente existente.
+        /// </summary>
+        Task<RegisterClientResponseDto?> UpdateClientNameAsync(long id, UpdateClientDto updateClientDto);
     }
 }

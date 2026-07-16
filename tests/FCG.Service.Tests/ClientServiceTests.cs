@@ -221,5 +221,117 @@ namespace FCG.Service.Tests
             Assert.Null(result);
         }
 
+        [Fact]
+        public async Task UpdateClientNameAsync_QuandoClienteExisteENomeValido_RetornaClienteAtualizado()
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var repoMock = new Mock<IClientRepository>();
+
+            var user = new IdentityUser { Id = "1", Email = "client@test.com" };
+            var client = new Client { Id = 1, Name = "Nome Antigo", UserId = "1", User = user };
+            repoMock.Setup(r => r.GetByIdWithUserAsync(1)).ReturnsAsync(client);
+            unitOfWorkMock.SetupGet(u => u.Clients).Returns(repoMock.Object);
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(m => m.Map<RegisterClientResponseDto>(client))
+                .Returns(new RegisterClientResponseDto { Id = 1, Name = "Nome Novo", Email = "client@test.com" });
+
+            var notificationHandlerMock = new Mock<INotificationHandler<DomainNotification>>();
+            var mediatorMock = new Mock<IMediatorHandler>();
+            var userServiceMock = new Mock<IUserService>();
+
+            var loggerMock = new Mock<ILogger<ClientService>>();
+            var clientService = new ClientService(
+                unitOfWorkMock.Object,
+                notificationHandlerMock.Object,
+                mediatorMock.Object,
+                userServiceMock.Object,
+                mapperMock.Object,
+                loggerMock.Object);
+
+            var dto = new UpdateClientDto { Name = "Nome Novo" };
+
+            // Act
+            var result = await clientService.UpdateClientNameAsync(1, dto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Nome Novo", result.Name);
+            Assert.Equal("client@test.com", result.Email);
+            repoMock.Verify(r => r.Update(It.IsAny<Client>()), Times.Once);
+            unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateClientNameAsync_QuandoClienteNaoExiste_RetornaNulo()
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var repoMock = new Mock<IClientRepository>();
+            repoMock.Setup(r => r.GetByIdWithUserAsync(999)).ReturnsAsync((Client?)null);
+            unitOfWorkMock.SetupGet(u => u.Clients).Returns(repoMock.Object);
+
+            var mapperMock = new Mock<IMapper>();
+            var notificationHandlerMock = new Mock<INotificationHandler<DomainNotification>>();
+            var mediatorMock = new Mock<IMediatorHandler>();
+            var userServiceMock = new Mock<IUserService>();
+
+            var loggerMock = new Mock<ILogger<ClientService>>();
+            var clientService = new ClientService(
+                unitOfWorkMock.Object,
+                notificationHandlerMock.Object,
+                mediatorMock.Object,
+                userServiceMock.Object,
+                mapperMock.Object,
+                loggerMock.Object);
+
+            var dto = new UpdateClientDto { Name = "Nome Válido" };
+
+            // Act
+            var result = await clientService.UpdateClientNameAsync(999, dto);
+
+            // Assert
+            Assert.Null(result);
+            repoMock.Verify(r => r.Update(It.IsAny<Client>()), Times.Never);
+            unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("  ")]
+        [InlineData(null)]
+        public async Task UpdateClientNameAsync_QuandoNomeInvalido_RetornaNulo(string? invalidName)
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var repoMock = new Mock<IClientRepository>();
+            unitOfWorkMock.SetupGet(u => u.Clients).Returns(repoMock.Object);
+
+            var mapperMock = new Mock<IMapper>();
+            var notificationHandlerMock = new Mock<INotificationHandler<DomainNotification>>();
+            var mediatorMock = new Mock<IMediatorHandler>();
+            var userServiceMock = new Mock<IUserService>();
+
+            var loggerMock = new Mock<ILogger<ClientService>>();
+            var clientService = new ClientService(
+                unitOfWorkMock.Object,
+                notificationHandlerMock.Object,
+                mediatorMock.Object,
+                userServiceMock.Object,
+                mapperMock.Object,
+                loggerMock.Object);
+
+            var dto = new UpdateClientDto { Name = invalidName! };
+
+            // Act
+            var result = await clientService.UpdateClientNameAsync(1, dto);
+
+            // Assert
+            Assert.Null(result);
+            repoMock.Verify(r => r.GetByIdWithUserAsync(It.IsAny<long>()), Times.Never);
+            unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+        }
+
     }
 }

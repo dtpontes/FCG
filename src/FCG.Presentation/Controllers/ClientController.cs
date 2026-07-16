@@ -70,5 +70,23 @@ namespace FCG.Presentation.Controllers
 
             return Response(client);
         }
+
+        /// <summary>
+        /// Atualiza o nome de um cliente existente
+        /// </summary>
+        /// <param name="id">Id do cliente</param>
+        /// <param name="updateClientDto">Novo nome do cliente</param>
+        /// <returns>Dados atualizados do cliente, erro de validação (400) ou 404 se não encontrado</returns>
+        [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(RegisterClientResponseDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateClient(long id, UpdateClientDto updateClientDto)
+        {
+            var client = await _clientService.UpdateClientNameAsync(id, updateClientDto);
+
+            return Response(client);
+        }
     }
 }
