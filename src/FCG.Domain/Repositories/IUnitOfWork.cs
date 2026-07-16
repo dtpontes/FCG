@@ -9,7 +9,7 @@ namespace FCG.Domain.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Client> Clients { get; }
+        IClientRepository Clients { get; }
 
         IRepository<Game> Games { get; }        
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
