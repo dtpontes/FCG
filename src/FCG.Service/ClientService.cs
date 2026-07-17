@@ -106,5 +106,33 @@ namespace FCG.Service
 
             return _mapper.Map<RegisterClientResponseDto>(client);
         }
+
+        /// <summary>
+        /// Atualiza o nome de um cliente existente.
+        /// </summary>
+        /// <param name="id">Id do cliente.</param>
+        /// <param name="updateClientDto">DTO com o novo nome.</param>
+        /// <returns>Dados atualizados do cliente, ou null se inválido ou não encontrado.</returns>
+        public async Task<RegisterClientResponseDto?> UpdateClientNameAsync(long id, UpdateClientDto updateClientDto)
+        {
+            if (!IsValidTransaction(updateClientDto))
+            {
+                return null;
+            }
+
+            var client = await _unitOfWork.Clients.GetByIdWithUserAsync(id);
+
+            if (client == null)
+            {
+                _logger.LogInformation("Cliente {ClientId} não encontrado", id);
+                return null;
+            }
+
+            client.Name = updateClientDto.Name;
+            _unitOfWork.Clients.Update(client);
+            await _unitOfWork.SaveChangesAsync();
+
+            return _mapper.Map<RegisterClientResponseDto>(client);
+        }
     }
 }
